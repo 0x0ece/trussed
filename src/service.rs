@@ -144,6 +144,8 @@ rpc_trait! {
         HmacSha256,
         #[cfg(feature = "hmac-sha512")]
         HmacSha512,
+        #[cfg(feature = "mldsa44")]
+        MlDsa44,
         #[cfg(feature = "p256")]
         P256,
         #[cfg(feature = "p256")]
