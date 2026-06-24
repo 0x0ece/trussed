@@ -60,7 +60,7 @@ delog = "0.1.0"
 flexiber = { version = "0.2.0", features = ["derive", "heapless"], optional = true }
 heapless-bytes = { workspace = true, features = ["heapless-0.9"] }
 interchange = "0.3.0"
-littlefs2 = "0.7.0"
+littlefs2 = "0.8"
 littlefs2-core = { workspace = true, features = ["heapless-bytes05"] }
 p256-cortex-m4 = { version = "0.1.0-alpha.6", features = ["prehash", "sec1-signatures"], optional = true }
 salty = { version = "0.3", optional = true }
@@ -79,7 +79,7 @@ once_cell = "1.13.0"
 serde_test = "1"
 sha2 = { version = "0.10", default-features = false }
 trussed-derive = { path = "derive" }
-littlefs2 = "0.7"
+littlefs2 = "0.8"
 # Somehow, this is causing a regression.
 # rand_core = { version = "0.5", features = ["getrandom"] }
 
