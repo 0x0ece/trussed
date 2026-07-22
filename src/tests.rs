@@ -60,7 +60,7 @@ impl crate::platform::UserInterface for UserInterface {
     }
 
     fn set_status(&mut self, status: ui::Status) {
-        println!("Set status: {:?}", status);
+        println!("Set status: {status:?}");
     }
 
     fn refresh(&mut self) {}
@@ -70,7 +70,7 @@ impl crate::platform::UserInterface for UserInterface {
     }
 
     fn reboot(&mut self, to: reboot::To) -> ! {
-        println!("Restart!  ({:?})", to);
+        println!("Restart!  ({to:?})");
         std::process::exit(25);
     }
 
@@ -277,14 +277,14 @@ fn sign_ed255() {
     println!("submitted gen ed255");
     let reply = block!(future);
     let private_key = reply.expect("no errors, never").key;
-    println!("got a private key {:?}", &private_key);
+    println!("got a private key {private_key:?}");
 
     let public_key = block!(client
         .derive_ed255_public_key(private_key, Location::Volatile)
         .expect("no client error"))
     .expect("no issues")
     .key;
-    println!("got a public key {:?}", &public_key);
+    println!("got a public key {public_key:?}");
 
     assert!(block!(client
         .derive_ed255_public_key(private_key, Location::Volatile)
@@ -301,7 +301,7 @@ fn sign_ed255() {
         .expect("no client error post err");
     let reply: Result<api::reply::Sign, _> = block!(future);
     let signature = reply.expect("good signature").signature;
-    println!("got a signature: {:?}", &signature);
+    println!("got a signature: {signature:?}");
 
     let future = client
         .verify_ed255(public_key, &message, &signature)
@@ -329,13 +329,13 @@ fn sign_p256() {
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &private_key);
+    println!("got a public key {private_key:?}");
     let public_key = block!(client
         .derive_p256_public_key(private_key, Location::Volatile)
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &public_key);
+    println!("got a public key {public_key:?}");
 
     let message = [1u8, 2u8, 3u8];
     let signature = block!(client
@@ -350,7 +350,7 @@ fn sign_p256() {
     let future = future.expect("no client error");
     let result = block!(future);
     if result.is_err() {
-        println!("error: {:?}", result);
+        println!("error: {result:?}");
     }
     let reply = result.expect("valid signature");
     let valid = reply.valid;
@@ -369,26 +369,26 @@ fn agree_p256() {
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &plat_private_key);
+    println!("got a public key {plat_private_key:?}");
     let plat_public_key = block!(client
         .derive_p256_public_key(plat_private_key, Location::Volatile)
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &plat_public_key);
+    println!("got a public key {plat_public_key:?}");
 
     let auth_private_key = block!(client
         .generate_p256_private_key(Location::Volatile)
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &auth_private_key);
+    println!("got a public key {auth_private_key:?}");
     let auth_public_key = block!(client
         .derive_p256_public_key(auth_private_key, Location::Volatile)
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &auth_public_key);
+    println!("got a public key {auth_public_key:?}");
 
     let shared_secret = block!(client
         .agree(
@@ -452,13 +452,13 @@ fn sign_p384() {
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &private_key);
+    println!("got a public key {private_key:?}");
     let public_key = block!(client
         .derive_p384_public_key(private_key, Location::Volatile)
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &public_key);
+    println!("got a public key {public_key:?}");
 
     let message = [1u8, 2u8, 3u8];
     let signature = block!(client
@@ -473,7 +473,7 @@ fn sign_p384() {
     let future = future.expect("no client error");
     let result = block!(future);
     if result.is_err() {
-        println!("error: {:?}", result);
+        println!("error: {result:?}");
     }
     let reply = result.expect("valid signature");
     let valid = reply.valid;
@@ -492,26 +492,26 @@ fn agree_p384() {
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &plat_private_key);
+    println!("got a public key {plat_private_key:?}");
     let plat_public_key = block!(client
         .derive_p384_public_key(plat_private_key, Location::Volatile)
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &plat_public_key);
+    println!("got a public key {plat_public_key:?}");
 
     let auth_private_key = block!(client
         .generate_p384_private_key(Location::Volatile)
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &auth_private_key);
+    println!("got a public key {auth_private_key:?}");
     let auth_public_key = block!(client
         .derive_p384_public_key(auth_private_key, Location::Volatile)
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &auth_public_key);
+    println!("got a public key {auth_public_key:?}");
 
     let shared_secret = block!(client
         .agree(
@@ -575,13 +575,13 @@ fn sign_p521() {
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &private_key);
+    println!("got a public key {private_key:?}");
     let public_key = block!(client
         .derive_p521_public_key(private_key, Location::Volatile)
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &public_key);
+    println!("got a public key {public_key:?}");
 
     let message = [1u8, 2u8, 3u8];
     let signature = block!(client
@@ -596,7 +596,7 @@ fn sign_p521() {
     let future = future.expect("no client error");
     let result = block!(future);
     if result.is_err() {
-        println!("error: {:?}", result);
+        println!("error: {result:?}");
     }
     let reply = result.expect("valid signature");
     let valid = reply.valid;
@@ -615,26 +615,26 @@ fn agree_p521() {
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &plat_private_key);
+    println!("got a public key {plat_private_key:?}");
     let plat_public_key = block!(client
         .derive_p521_public_key(plat_private_key, Location::Volatile)
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &plat_public_key);
+    println!("got a public key {plat_public_key:?}");
 
     let auth_private_key = block!(client
         .generate_p521_private_key(Location::Volatile)
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &auth_private_key);
+    println!("got a public key {auth_private_key:?}");
     let auth_public_key = block!(client
         .derive_p521_public_key(auth_private_key, Location::Volatile)
         .expect("no client error"))
     .expect("no errors")
     .key;
-    println!("got a public key {:?}", &auth_public_key);
+    println!("got a public key {auth_public_key:?}");
 
     let shared_secret = block!(client
         .agree(
@@ -706,7 +706,7 @@ fn aead_rng_nonce() {
         .expect("no errors")
         .key;
 
-        println!("got a key {:?}", &secret_key);
+        println!("got a key {secret_key:?}");
 
         let message = b"test message";
         let associated_data = b"solokeys.com";
@@ -751,7 +751,7 @@ fn aead_given_nonce() {
         .expect("no errors")
         .key;
 
-        println!("got a key {:?}", &secret_key);
+        println!("got a key {secret_key:?}");
 
         let message = b"test message";
         let associated_data = b"solokeys.com";
@@ -807,7 +807,7 @@ fn aead_given_nonce_2() {
         .expect("no errors")
         .key;
 
-        println!("got a key {:?}", &secret_key);
+        println!("got a key {secret_key:?}");
 
         let message = b"test message";
         let associated_data = b"solokeys.com";
@@ -862,7 +862,7 @@ fn aead() {
         .expect("no errors")
         .key;
 
-        println!("got a key {:?}", &secret_key);
+        println!("got a key {secret_key:?}");
 
         let message = b"test message";
         let associated_data = b"solokeys.com";

@@ -11,7 +11,7 @@ pub fn get_attr<'a>(attrs: &'a [Attribute], name: &'a str) -> Result<Option<&'a 
     if let Some(next) = attrs.next() {
         Err(Error::new_spanned(
             next,
-            format!("multiple {} attributes are not supported", name),
+            format!("multiple {name} attributes are not supported"),
         ))
     } else {
         Ok(first)
@@ -24,7 +24,7 @@ pub fn require_attr<'a>(
     name: &'a str,
 ) -> Result<&'a Attribute> {
     get_attr(attrs, name)?
-        .ok_or_else(|| Error::new_spanned(span, format!("missing #[{}(...)] attribute", name)))
+        .ok_or_else(|| Error::new_spanned(span, format!("missing #[{name}(...)] attribute")))
 }
 
 pub fn to_camelcase(ident: &Ident) -> Ident {
